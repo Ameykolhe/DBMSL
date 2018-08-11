@@ -1,0 +1,37 @@
+DECLARE
+customerID number(4);
+stat varchar2(1);
+noOfDays number;
+alreadyPaid EXCEPTION;
+daysLessThanFifteen EXCEPTION;
+BEGIN
+customerID := &customerId;
+select status into stat from te3144Customer where custID = customerID;
+select trunc(sysdate) - dateOfPayment into noOfDays from te3144Customer where custID = customerID;
+noOfDays := noOfDays - 15;
+if( stat = 'p') then
+dbms_output.put_line('Raised alreadypaid');
+RAISE alreadyPaid;
+elsif(noOfDays > 15) then
+dbms_output.put_line('No oF Days : ' || noOfDays);
+noOfDays := noOfDays - 15;
+dbms_output.put_line('Fine Amount : ' || noOfDays*50 + 75);
+insert into te3144Fine values(customerID, sysdate() , noOfDays*50 + 75 );
+update te3144Customer set status = 'p' where custId = customerID;
+elsif(noOfDays <= 15 and noOfDays > 0) then
+dbms_output.put_line('No oF Days : ' || noOfDays);
+dbms_output.put_line('Fine Amount : ' || noOfDays*5);
+insert into te3144Fine values(customerID, sysdate() , noOfDays*5);
+update te3144Customer set status = 'p' where custId = customerID;
+elsif(noOfDays < 0) then
+dbms_output.put_line('Raised daysLessThanFifteen');
+RAISE daysLessThanFifteen;
+end if;
+EXCEPTION 
+when no_data_found then
+dbms_output.put_line('customer does not exists');
+when daysLessThanFifteen then
+dbms_output.put_line('NoOfDays is less than 15  -  NO FINE IS APPLICABLE');
+when alreadyPaid then
+dbms_output.put_line('Payment Clear');
+END;
