@@ -1,0 +1,92 @@
+Tables :
+
+SQL> create table te3144CustomerA7(custID number(4) primary key, name varchar2(20) , totalPurchase number);
+
+SQL> create table te3144CategoryA7(custID number(4) primary key, name varchar2(20) , class varchar2(20) );
+
+
+Table Contents : 
+
+SQL> select * from te3144CustomerA7;
+
+    CUSTID NAME                 TOTALPURCHASE
+---------- -------------------- -------------
+      1001 Amey                         25000
+      1002 Aditya                       15000
+      1003 Mandar                        8000
+      1004 Pratik                        3000
+      1005 Anmol                         1000
+
+
+
+pl/sql Stored Procedure:
+
+CREATE OR REPLACE PROCEDURE categorize(custID IN number)
+as
+name varchar2(20);
+totalPurchase number;
+cannotBeCategorized EXCEPTION;
+BEGIN
+select name , totalPurchase into name , totalPurchase FROM te3144CustomerA7 where te3144CustomerA7.custID = categorize.custID;
+if ( totalPurchase >= 10000 and totalPurchase < 20000 ) then
+    INSERT into te3144CategoryA7 values(custID , name , 'Platinum');
+    dbms_output.put_line('Category : Platinum');
+elsif ( totalPurchase >= 5000 and totalPurchase < 10000 ) then
+    INSERT into te3144CategoryA7 values(custID , name , 'Gold');
+    dbms_output.put_line('Category : Gold');
+elsif ( totalPurchase >= 2000 and totalPurchase < 5000 ) then
+    INSERT into te3144CategoryA7 values(custID , name , 'Silver');
+    dbms_output.put_line('Category : Silver');
+else
+    raise cannotBeCategorized;
+END if;
+EXCEPTION
+when no_data_found then
+dbms_output.put_line('customer does not exists');
+when cannotBeCategorized then
+dbms_output.put_line('customer cannot be categorized');
+END;
+
+
+
+Output : 
+
+Procedure created.
+
+SQL> exec categorize(1001);
+customer cannot be categorized
+
+PL/SQL procedure successfully completed.
+
+SQL> exec categorize(1002);
+Category : Platinum
+
+PL/SQL procedure successfully completed.
+
+SQL> exec categorize(1003);
+Category : Gold
+
+PL/SQL procedure successfully completed.
+
+SQL> exec categorize(1004);
+Category : Silver
+
+PL/SQL procedure successfully completed.
+
+SQL> exec categorize(1005);
+customer cannot be categorized
+
+PL/SQL procedure successfully completed.
+
+SQL> exec categorize(1006);
+customer does not exists
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from te3144CategoryA7;
+
+    CUSTID NAME                 CLASS
+---------- -------------------- --------------------
+      1002 Aditya               Platinum
+      1003 Mandar               Gold
+      1004 Pratik               Silver

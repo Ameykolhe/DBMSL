@@ -1,3 +1,33 @@
+SQL> desc te3144Customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTID                                    NOT NULL NUMBER(4)
+ DATEOFPAYMENT                                      DATE
+ NAMEOFSCHEME                                       VARCHAR2(20)
+ STATUS                                             VARCHAR2(1)
+
+
+ SQL> desc te3144Fine;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTID                                             NUMBER(4)
+ DATEOFPAYMENT                                      DATE
+ FINEAMOUNT                                         NUMBER
+
+
+SQL> select * from te3144Customer;
+
+    CUSTID DATEOFPAY NAMEOFSCHEME         S
+---------- --------- -------------------- -
+      1001 11-AUG-18 platinum             n
+      1002 05-AUG-18 Gold                 n
+      1003 16-JUL-18 Silver               p
+      1004 01-JUL-18 Platinum             n
+
+
+
+pl/sql block : 
+
 DECLARE
 customerID number(4);
 stat varchar2(1);
@@ -13,14 +43,10 @@ if( stat = 'p') then
 dbms_output.put_line('Raised alreadypaid');
 RAISE alreadyPaid;
 elsif(noOfDays > 15) then
-dbms_output.put_line('No oF Days : ' || noOfDays);
 noOfDays := noOfDays - 15;
-dbms_output.put_line('Fine Amount : ' || noOfDays*50 + 75);
 insert into te3144Fine values(customerID, sysdate() , noOfDays*50 + 75 );
 update te3144Customer set status = 'p' where custId = customerID;
 elsif(noOfDays <= 15 and noOfDays > 0) then
-dbms_output.put_line('No oF Days : ' || noOfDays);
-dbms_output.put_line('Fine Amount : ' || noOfDays*5);
 insert into te3144Fine values(customerID, sysdate() , noOfDays*5);
 update te3144Customer set status = 'p' where custId = customerID;
 elsif(noOfDays < 0) then
@@ -35,3 +61,55 @@ dbms_output.put_line('NoOfDays is less than 15  -  NO FINE IS APPLICABLE');
 when alreadyPaid then
 dbms_output.put_line('Payment Clear');
 END;
+
+
+
+Output : 
+
+Enter value for customerid: 1001
+old   8: customerID := &customerId;
+new   8: customerID := 1001;
+Raised daysLessThanFifteen
+NoOfDays is less than 15  -  NO FINE IS APPLICABLE
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for customerid: 1002
+old   8: customerID := &customerId;
+new   8: customerID := 1002;
+
+PL/SQL procedure successfully completed.
+
+SQL> /
+Enter value for customerid: 1003
+old   8: customerID := &customerId;
+new   8: customerID := 1003;
+Raised alreadypaid
+Payment Clear
+
+PL/SQL procedure successfully completed.
+
+Enter value for customerid: 1004
+old   8: customerID := &customerId;
+new   8: customerID := 1004;
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from te3144Fine;
+
+
+SQL> select * from te3144Fine;
+
+    CUSTID DATEOFPAY FINEAMOUNT
+---------- --------- ----------
+      1004 16-AUG-18        875
+
+SQL> select * from te3144Customer;
+
+    CUSTID DATEOFPAY NAMEOFSCHEME         S
+---------- --------- -------------------- -
+      1001 11-AUG-18 platinum             n
+      1002 01-AUG-18 Gold                 n
+      1003 16-JUL-18 Silver               p
+      1004 01-JUL-18 Platinum             p
