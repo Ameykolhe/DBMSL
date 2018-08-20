@@ -1,0 +1,7 @@
+Tables:
+
+SQL> create table te3144EmployeeA6(empID number(4) primary key , project varchar2(10) , status varchar2(1) , dateOfCompletion date );
+SQL> create table te3144IncentiveListA6(empID number(4) primary key , project varchar2(10) );
+
+
+Insert into te3144EmployeeA6 values(&empID,'&Project','&Status',to_date('&DateOfCompletion','DD-MM-YYYY'));
