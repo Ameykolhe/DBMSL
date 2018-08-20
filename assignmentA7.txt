@@ -18,35 +18,64 @@ SQL> select * from te3144CustomerA7;
       1005 Anmol                         1000
 
 
+pl/sql Stored Function:
+
+
+CREATE OR REPLACE FUNCTION get_total_purchase(custID IN number)
+RETURN number 
+IS
+    totalPurchase number;
+BEGIN
+    Select totalPurchase into totalPurchase FROM te3144CustomerA7 where te3144CustomerA7.custID = get_total_purchase.custID;
+    RETURN totalPurchase;
+EXCEPTION
+    when no_data_found then
+    dbms_output.put_line('customer does not exists');
+END;
+
+
+
+CREATE OR REPLACE FUNCTION get_customer_name(custID IN number)
+    RETURN varchar2
+IS
+    name varchar2(20);
+BEGIN
+    Select name into name FROM te3144CustomerA7 where te3144CustomerA7.custID = get_customer_name.custID;
+RETURN name;
+EXCEPTION
+    when no_data_found then
+    dbms_output.put_line('customer does not exists');
+END;
+
+
+
 
 pl/sql Stored Procedure:
 
 CREATE OR REPLACE PROCEDURE categorize(custID IN number)
-as
-name varchar2(20);
-totalPurchase number;
-cannotBeCategorized EXCEPTION;
+AS
+    name varchar2(20);
+    totalPurchase number;
+    cannotBeCategorized EXCEPTION;
 BEGIN
-select name , totalPurchase into name , totalPurchase FROM te3144CustomerA7 where te3144CustomerA7.custID = categorize.custID;
-if ( totalPurchase >= 10000 and totalPurchase < 20000 ) then
-    INSERT into te3144CategoryA7 values(custID , name , 'Platinum');
-    dbms_output.put_line('Category : Platinum');
-elsif ( totalPurchase >= 5000 and totalPurchase < 10000 ) then
-    INSERT into te3144CategoryA7 values(custID , name , 'Gold');
-    dbms_output.put_line('Category : Gold');
-elsif ( totalPurchase >= 2000 and totalPurchase < 5000 ) then
-    INSERT into te3144CategoryA7 values(custID , name , 'Silver');
-    dbms_output.put_line('Category : Silver');
-else
-    raise cannotBeCategorized;
+    name := get_customer_name(custID);
+    totalPurchase := get_total_purchase(custID);
+    if ( totalPurchase >= 10000 and totalPurchase < 20000 ) then
+        INSERT into te3144CategoryA7 values(custID , name , 'Platinum');
+        dbms_output.put_line('Category : Platinum');
+    elsif ( totalPurchase >= 5000 and totalPurchase < 10000 ) then
+        INSERT into te3144CategoryA7 values(custID , name , 'Gold');
+        dbms_output.put_line('Category : Gold');
+    elsif ( totalPurchase >= 2000 and totalPurchase < 5000 ) then
+        INSERT into te3144CategoryA7 values(custID , name , 'Silver');
+        dbms_output.put_line('Category : Silver');
+    else
+        raise cannotBeCategorized;
 END if;
 EXCEPTION
-when no_data_found then
-dbms_output.put_line('customer does not exists');
-when cannotBeCategorized then
-dbms_output.put_line('customer cannot be categorized');
+    when cannotBeCategorized then
+    dbms_output.put_line('customer cannot be categorized');
 END;
-
 
 
 Output : 
