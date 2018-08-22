@@ -1,0 +1,86 @@
+Tables :
+
+SQL> Create table te3144StudentA8(rollNO number(4) primary key, name varchar2(20) , dateOfAdmission date , branch varchar2(10) , percent number(4,2) , status varchar2(1) );
+
+SQL> Create table te3144AlumniA8(rollNO number(4) primary key, name varchar2(20) , dateOfAdmission date , branch varchar2(10) , percent number(4,2) , status varchar2(1) );
+
+SQL> Create table te3144TempA8(rollNO number(4) primary key, name varchar2(20) , dateOfAdmission date , branch varchar2(10) , percent number(4,2) , status varchar2(1) );
+
+SQL> insert into te3144TempA8 Select * from te3144StudentA8;
+
+Table Contents :
+
+SQL> select * from te3144StudentA8;
+
+    ROLLNO NAME                 DATEOFADM BRANCH        PERCENT S
+---------- -------------------- --------- ---------- ---------- -
+      3144 Amey                 01-AUG-16 Comp             85.9 n
+      3149 Aditya               01-AUG-16 Comp             92.8 n
+      3155 Mandar               01-AUG-16 Comp             90.4 n
+      3158 Pratik               01-AUG-16 Comp             88.5 n
+      3948 Akshat               01-AUG-16 IT               83.2 n
+      3957 Parth                01-AUG-16 IT               88.8 n
+
+6 rows selected.
+
+SQL> select * from te3144AlumniA8;
+
+no rows selected
+
+
+pl/sql Trigger :
+
+Row level Trigger Before Update :
+
+CREATE OR REPLACE TRIGGER rowlvl_before_update
+BEFORE UPDATE OF status ON te3144StudentA8 FOR EACH ROW
+BEGIN
+IF (:NEW.status = 'p') then
+    Insert into te3144AlumniA8 values(:OLD.rollNO , :OLD.name , :OLD.dateOfAdmission , :OLD.branch , :OLD.percent , :NEW.status );
+END IF;
+EXCEPTION
+when DUP_VAL_ON_INDEX THEN
+dbms_output.put_line('Already Present in alumni');
+END;
+
+Triggering Statement : 
+
+SQL> update te3144StudentA8 set status = 'p' where branch = 'Comp';
+4 rows updated.
+
+Output :
+
+SQL> select * from te3144AlumniA8;
+
+    ROLLNO NAME                 DATEOFADM BRANCH        PERCENT S
+---------- -------------------- --------- ---------- ---------- -
+      3144 Amey                 01-AUG-16 Comp             85.9 p
+      3149 Aditya               01-AUG-16 Comp             92.8 p
+      3155 Mandar               01-AUG-16 Comp             90.4 p
+      3158 Pratik               01-AUG-16 Comp             88.5 p
+
+
+
+Row Level Trigger After Delete :
+
+CREATE OR REPLACE TRIGGER rowlvl_before_delete
+AFTER DELETE ON te3144StudentA8 FOR EACH ROW
+BEGIN
+Insert into te3144AlumniA8 values(:OLD.rollNO , :OLD.name , :OLD.dateOfAdmission , :OLD.branch , :OLD.percent , :OLD.status );
+EXCEPTION
+when DUP_VAL_ON_INDEX THEN
+dbms_output.put_line('Already Present in alumni');
+END;
+
+Triggering Statement :
+
+SQL> delete from te3144StudentA8 where branch = 'IT';
+
+output :
+
+SQL> select * from te3144AlumniA8;
+
+    ROLLNO NAME                 DATEOFADM BRANCH        PERCENT S
+---------- -------------------- --------- ---------- ---------- -
+      3948 Akshat               01-AUG-16 IT               83.2 n
+      3957 Parth                01-AUG-16 IT               88.8 n
