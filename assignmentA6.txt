@@ -2,6 +2,103 @@ Tables:
 
 SQL> create table te3144EmployeeA6(empID number(4) primary key , project varchar2(10) , status varchar2(1) , dateOfCompletion date );
 SQL> create table te3144IncentiveListA6(empID number(4) primary key , project varchar2(10) );
+SQL> create table te3144PendingListA6(empID number(4) primary key , project varchar2(10) );
 
 
 Insert into te3144EmployeeA6 values(&empID,'&Project','&Status',to_date('&DateOfCompletion','DD-MM-YYYY'));
+
+
+Data :
+
+SQL> select * from te3144EmployeeA6;
+
+     EMPID PROJECT    S DATEOFCOMPLETION
+---------- ---------- - ------------------
+      1001 SDL	      n 01-AUG-18
+      1002 DBMS       n 15-AUG-18
+      1003 CNL	      c 01-JUL-18
+      1004 ADS	      c 01-JUN-18
+
+
+
+Implicit Cursor :
+
+
+DECLARE
+checkDate date;
+BEGIN
+checkDate := to_date('&date','DD-MM-YYYY');
+Insert into te3144IncentiveListA6 
+Select empID,project from te3144EmployeeA6 where status = 'c' and dateOfCompletion < checkDate ;
+if sql%notfound then
+dbms_output.put_line('No Entries Found');
+END IF;
+END;
+
+
+Output :
+
+
+Enter value for date: 25-08-2018
+old   4: checkDate := to_date('&date','DD-MM-YYYY');
+new   4: checkDate := to_date('25-08-2018','DD-MM-YYYY');
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from te3144IncentiveListA6;
+
+     EMPID PROJECT
+---------- ----------
+      1003 CNL
+      1004 ADS
+
+
+
+Explicit Cursor :
+
+DECLARE
+checkDate date;
+empID te3144EmployeeA6.empID%type;
+project te3144EmployeeA6.project%type;
+CURSOR empCursor is Select empID,project from te3144EmployeeA6 where status = 'c' and dateOfCompletion < checkDate ;
+BEGIN
+checkDate := to_date('&date','DD-MM-YYYY');
+open empCursor;
+LOOP
+FETCH empCursor into empID , project ;
+EXIT when empCursor%notfound;
+insert into te3144IncentiveListA6 values(empID,project);
+END LOOP;
+close empCursor;
+END;
+
+Output :
+
+
+Enter value for date: 25-08-2018
+old   4: checkDate := to_date('&date','DD-MM-YYYY');
+new   4: checkDate := to_date('25-08-2018','DD-MM-YYYY');
+
+PL/SQL procedure successfully completed.
+
+
+SQL> select * from te3144IncentiveListA6;
+
+     EMPID PROJECT
+---------- ----------
+      1003 CNL
+      1004 ADS
+
+
+FOR loop Cursor :
+
+DECLARE
+checkDate date;
+CURSOR empCursor is Select empID,project from te3144EmployeeA6 where status = 'n' and dateOfCompletion < checkDate ;
+BEGIN
+checkDate := to_date('&date','DD-MM-YYYY');
+FOR record in empCursor
+LOOP
+    Insert into te3144PendingListA6 values(record.empID,record.project);
+END LOOP;
+END;
