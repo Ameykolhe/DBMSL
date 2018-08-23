@@ -6,6 +6,10 @@ SQL> Create table te3144AlumniA8(rollNO number(4) primary key, name varchar2(20)
 
 SQL> Create table te3144TempA8(rollNO number(4) primary key, name varchar2(20) , dateOfAdmission date , branch varchar2(10) , percent number(4,2) , status varchar2(1) );
 
+SQL> Create table te3144logA8(dateOfOperation date , statement varchar2(60) , rowCount number );
+
+SQL> Insert into te3144StudentA8 values(&rollNO , '&name' , to_date('&date' , 'DD-MM-YYYY') , '&branch' , &percent , '&status');
+
 SQL> insert into te3144TempA8 Select * from te3144StudentA8;
 
 Table Contents :
@@ -63,7 +67,7 @@ SQL> select * from te3144AlumniA8;
 
 Row Level Trigger After Delete :
 
-CREATE OR REPLACE TRIGGER rowlvl_before_delete
+CREATE OR REPLACE TRIGGER rowlvl_after_delete
 AFTER DELETE ON te3144StudentA8 FOR EACH ROW
 BEGIN
 Insert into te3144AlumniA8 values(:OLD.rollNO , :OLD.name , :OLD.dateOfAdmission , :OLD.branch , :OLD.percent , :OLD.status );
@@ -84,3 +88,16 @@ SQL> select * from te3144AlumniA8;
 ---------- -------------------- --------- ---------- ---------- -
       3948 Akshat               01-AUG-16 IT               83.2 n
       3957 Parth                01-AUG-16 IT               88.8 n
+
+
+Statement Level Trigger :
+
+
+CREATE OR REPLACE stmtlvl_trigger
+AFTER DELETE OR UPDATE ON te3144StudentA8
+DECLARE
+noOfRows number;
+BEGIN
+dbms_output.put_line(to_char(sql%rowcount));
+END;
+
