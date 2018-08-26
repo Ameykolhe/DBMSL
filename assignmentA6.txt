@@ -4,9 +4,7 @@ SQL> create table te3144EmployeeA6(empID number(4) primary key , project varchar
 SQL> create table te3144IncentiveListA6(empID number(4) primary key , project varchar2(10) );
 SQL> create table te3144PendingListA6(empID number(4) primary key , project varchar2(10) );
 
-
 Insert into te3144EmployeeA6 values(&empID,'&Project','&Status',to_date('&DateOfCompletion','DD-MM-YYYY'));
-
 
 Data :
 
@@ -15,9 +13,10 @@ SQL> select * from te3144EmployeeA6;
      EMPID PROJECT    S DATEOFCOMPLETION
 ---------- ---------- - ------------------
       1001 SDL	      n 01-AUG-18
-      1002 DBMS       n 15-AUG-18
+      1002 DBMS         n 15-AUG-18
       1003 CNL	      c 01-JUL-18
       1004 ADS	      c 01-JUN-18
+
 
 
 
@@ -35,7 +34,6 @@ dbms_output.put_line('No Entries Found');
 END IF;
 END;
 
-
 Output :
 
 
@@ -51,6 +49,7 @@ SQL> select * from te3144IncentiveListA6;
 ---------- ----------
       1003 CNL
       1004 ADS
+
 
 
 
@@ -90,15 +89,61 @@ SQL> select * from te3144IncentiveListA6;
       1004 ADS
 
 
-FOR loop Cursor :
+
+
+FOR loop Cursor / Parametrized Cursor:
 
 DECLARE
 checkDate date;
-CURSOR empCursor is Select empID,project from te3144EmployeeA6 where status = 'n' and dateOfCompletion < checkDate ;
+CURSOR empCursor(stat varchar2) is Select empID,project from te3144EmployeeA6 where status = stat and dateOfCompletion < checkDate ;
+stat varchar2(1);
 BEGIN
 checkDate := to_date('&date','DD-MM-YYYY');
-FOR record in empCursor
-LOOP
-    Insert into te3144PendingListA6 values(record.empID,record.project);
-END LOOP;
+stat := '&status';
+if(stat = 'n') then
+      FOR record in empCursor(stat)
+      LOOP
+            Insert into te3144PendingListA6 values(record.empID,record.project);
+      END LOOP;
+elsif(stat = 'c') then
+      FOR record in empCursor(stat)
+      LOOP
+            Insert into te3144IncentiveListA6 values(record.empID,record.project);
+      END LOOP;
+END if;
 END;
+
+Output :
+
+Enter value for date: 01-09-2018
+old   6: checkDate := to_date('&date','DD-MM-YYYY');
+new   6: checkDate := to_date('01-09-2018','DD-MM-YYYY');
+Enter value for status: c
+old   7: stat := '&status';
+new   7: stat := 'c';
+
+PL/SQL procedure successfully completed.
+
+SQL> Select * from te3144IncentiveListA6;
+
+     EMPID PROJECT
+---------- ----------
+      1003 CNL
+      1004 ADS
+
+
+Enter value for date: 01-09-2018
+old   6: checkDate := to_date('&date','DD-MM-YYYY');
+new   6: checkDate := to_date('01-09-2018','DD-MM-YYYY');
+Enter value for status: n
+old   7: stat := '&status';
+new   7: stat := 'n';
+
+PL/SQL procedure successfully completed.
+
+SQL> Select * from te3144PendingListA6;
+
+     EMPID PROJECT
+---------- ----------
+      1001 SDL
+      1002 DBMS
