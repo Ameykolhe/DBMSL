@@ -6,11 +6,12 @@ SQL> Create table te3144AlumniA8(rollNO number(4) primary key, name varchar2(20)
 
 SQL> Create table te3144TempA8(rollNO number(4) primary key, name varchar2(20) , dateOfAdmission date , branch varchar2(10) , percent number(4,2) , status varchar2(1) );
 
-SQL> Create table te3144logA8(dateOfOperation date , statement varchar2(60) , rowCount number );
 
 SQL> Insert into te3144StudentA8 values(&rollNO , '&name' , to_date('&date' , 'DD-MM-YYYY') , '&branch' , &percent , '&status');
 
-SQL> insert into te3144TempA8 Select * from te3144StudentA8;
+SQL> Insert into te3144TempA8 Select * from te3144StudentA8;
+
+
 
 Table Contents :
 
@@ -34,7 +35,9 @@ no rows selected
 
 pl/sql Trigger :
 
+
 Row level Trigger Before Update :
+
 
 CREATE OR REPLACE TRIGGER rowlvl_before_update
 BEFORE UPDATE OF status ON te3144StudentA8 FOR EACH ROW
@@ -67,6 +70,7 @@ SQL> select * from te3144AlumniA8;
 
 Row Level Trigger After Delete :
 
+
 CREATE OR REPLACE TRIGGER rowlvl_after_delete
 AFTER DELETE ON te3144StudentA8 FOR EACH ROW
 BEGIN
@@ -93,11 +97,75 @@ SQL> select * from te3144AlumniA8;
 Statement Level Trigger :
 
 
-CREATE OR REPLACE stmtlvl_trigger
-AFTER DELETE OR UPDATE ON te3144StudentA8
-DECLARE
-noOfRows number;
-BEGIN
-dbms_output.put_line(to_char(sql%rowcount));
+SQL> Create table te3144logA8(dateOfOperation date , statement varchar2(10) , rowCount number );
+
+-- PACKAGE
+CREATE OR REPLACE PACKAGE rowCounter IS 
+rowcnt number; 
 END;
 
+
+CREATE OR REPLACE TRIGGER init_to_zero
+BEFORE DELETE OR UPDATE OR INSERT ON te3144StudentA8
+BEGIN 
+    rowCounter.rowcnt := 0; 
+END; 
+
+
+CREATE OR REPLACE TRIGGER inc_row_cnt
+BEFORE DELETE OR UPDATE OR INSERT ON te3144StudentA8 FOR EACH ROW
+BEGIN 
+    rowCounter.rowcnt := rowCounter.rowcnt + 1; 
+END; 
+
+
+CREATE OR REPLACE TRIGGER stmtlvl_trigger
+AFTER DELETE OR UPDATE OR INSERT ON te3144StudentA8
+DECLARE
+msg varchar2(10);
+BEGIN
+    IF UPDATING then
+        msg := 'Update';
+    ELSIF INSERTING then
+        msg := 'Insert';
+    ELSIF DELETING then
+        msg := 'Delete';
+    END IF;
+    Insert into te3144LogA8 values(SYSDATE , msg , rowCounter.rowcnt);
+END;
+
+
+Triggering Statement : 
+
+SQL> update te3144StudentA8 set branch = 'ENTC' where branch = 'IT';
+
+2 rows updated.
+
+
+SQL> Insert into te3144StudentA8 values(&rollNO , '&name' , to_date('&date' , 'DD-MM-YYYY') , '&branch' , &percent , '&status');
+Enter value for rollno: 3145
+Enter value for name: Aniket
+Enter value for date: 01-08-2016
+Enter value for branch: Comp
+Enter value for percent: 84.2
+Enter value for status: n
+old   1: Insert into te3144StudentA8 values(&rollNO , '&name' , to_date('&date' , 'DD-MM-YYYY') , '&branch' , &percent , '&status')
+new   1: Insert into te3144StudentA8 values(3145 , 'Aniket' , to_date('01-08-2016' , 'DD-MM-YYYY') , 'Comp' , 84.2 , 'n')
+
+1 row created.
+
+
+SQL> delete from te3144StudentA8 where branch = 'Comp';
+
+5 rows deleted.
+
+
+Output :
+
+SQL> Select * from te3144LogA8;
+
+DATEOFOPE STATEMENT    ROWCOUNT
+--------- ---------- ----------
+26-AUG-18 Update              2
+26-AUG-18 Insert              1
+26-AUG-18 Delete              5
