@@ -1,0 +1,98 @@
+
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Goa','name':'xyz',info:{'nameOfCrew': [ {fName:'Aditya' , lName : 'Mahaddalkar'} ], losses : 40000} } )
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Kochi','name':'pqr',info:{'nameOfCrew': [ {fName:'Mandar' , lName : 'Pande'} ], losses : 60000  , civilians : 100} } )
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'def',info:{'nameOfCrew': [ {fName:'Anmol' , lName : 'Khanapure'} , {fName : 'Naren' , lName : 'khake'}], losses : 4000  , civilians : 20} } )
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'abc',info:{'nameOfCrew': [ {fName:'Amey' , lName : 'Kolhe'} , {fName : 'Aniket' , lName : 'Kotalwar'} ], losses : 20000} } )
+
+> db.shipWrecks.find().pretty()
+{
+	"_id" : ObjectId("5b87a92a5d67e7ecdbee1e31"),
+	"loc" : "Goa",
+	"name" : "xyz",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Aditya",
+				"lName" : "Mahaddalkar"
+			}
+		],
+		"losses" : 40000
+	}
+}
+{
+	"_id" : ObjectId("5b87a9ba5d67e7ecdbee1e32"),
+	"loc" : "Kochi",
+	"name" : "pqr",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Mandar",
+				"lName" : "Pande"
+			}
+		],
+		"losses" : 60000,
+		"civilians" : 100
+	}
+}
+{
+	"_id" : ObjectId("5b87ab695d67e7ecdbee1e33"),
+	"loc" : "Mumbai",
+	"name" : "def",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Anmol",
+				"lName" : "Khanapure"
+			},
+			{
+				"fName" : "Naren",
+				"lName" : "khake"
+			}
+		],
+		"losses" : 4000,
+		"civilians" : 20
+	}
+}
+{
+	"_id" : ObjectId("5b87ab865d67e7ecdbee1e34"),
+	"loc" : "Mumbai",
+	"name" : "abc",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Amey",
+				"lName" : "Kolhe"
+			},
+			{
+				"fName" : "Aniket",
+				"lName" : "Kotalwar"
+			}
+		],
+		"losses" : 20000
+	}
+}
+{
+	"_id" : ObjectId("5b87b045de311337f5449487"),
+	"loc" : "Goa",
+	"name" : "fgh",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Daksh",
+				"lName" : "Pokar"
+			},
+			{
+				"fName" : "Apoorva",
+				"lName" : "Khuspe"
+			},
+			{
+				"fName" : "Akash",
+				"lName" : "Patil"
+			}
+		],
+		"losses" : 10000
+	}
+}
+
+
+1. 
