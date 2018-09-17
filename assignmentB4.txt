@@ -1,0 +1,39 @@
+> db.splitwise.find()
+{ "_id" : ObjectId("5b9fd9acdde36a3d1cd8e2d1"), "description" : "Rolls Delight", "total" : 230, "paidBy" : [ { "Amey" : 230 } ], "share" : [ { "Aditya" : 115 }, { "Amey" : 115 } ] }
+{ "_id" : ObjectId("5b9fda2ddde36a3d1cd8e2d2"), "description" : "sk`s", "total" : 450, "paidBy" : [ { "Amey" : 300 }, { "Himanshu" : 150 } ], "share" : [ { "Amey" : 90 }, { "Himanshu" : 90 }, { "Shriniwas" : 90 }, { "Hrushabh" : 90 }, { "Anuj" : 90 } ] }
+{ "_id" : ObjectId("5b9fda93dde36a3d1cd8e2d3"), "description" : "Ice N Spice", "total" : 600, "paidBy" : [ { "Shriniwas" : 600 } ], "share" : [ { "Amey" : 200 }, { "Himanshu" : 100 }, { "Shriniwas" : 200 }, { "Hrushabh" : 100 } ] }
+{ "_id" : ObjectId("5b9fdde4dde36a3d1cd8e2d4"), "description" : "McD", "total" : 340, "paidBy" : [ { "Amey" : 200 }, { "Jay" : 140 } ], "share" : [ { "Amey" : 170 }, { "Jay" : 170 } ] }
+{ "_id" : ObjectId("5b9fde7ddde36a3d1cd8e2d5"), "description" : "Creamy Nuts", "total" : 300, "paidBy" : [ { "Anuj" : 300 } ], "share" : [ { "Amey" : 75 }, { "Himanshu" : 75 }, { "Shriniwas" : 75 }, { "Anuj" : 75 } ] }
+{ "_id" : ObjectId("5b9fdf41dde36a3d1cd8e2d6"), "description" : "Rolls Delight", "total" : 460, "paidBy" : [ { "Shriniwas" : 460 } ], "share" : [ { "Amey" : 120 }, { "Himanshu" : 80 }, { "Shriniwas" : 120 }, { "Hrushabh" : 70 }, { "Anuj" : 70 } ] }
+{ "_id" : ObjectId("5b9fdf8fdde36a3d1cd8e2d7"), "description" : "McD", "total" : 520, "paidBy" : [ { "Hrushabh" : 520 } ], "share" : [ { "Amey" : 170 }, { "Himanshu" : 90 }, { "Shriniwas" : 170 }, { "Hrushabh" : 90 } ] }
+{ "_id" : ObjectId("5b9fe0dadde36a3d1cd8e2d8"), "description" : "Rolls Delight", "total" : 300, "paidBy" : [ { "Amey" : 300 } ], "share" : [ { "Aditya" : 150 }, { "Amey" : 150 } ] }
+{ "_id" : ObjectId("5b9fe1d9dde36a3d1cd8e2d9"), "description" : "McD", "total" : 420, "paidBy" : [ { "Amey" : 400 } ], "share" : [ { "Aditya" : 140 }, { "Amey" : 140 } ] }
+{ "_id" : ObjectId("5b9fe24fdde36a3d1cd8e2da"), "description" : "Rolls Delight", "total" : 180, "paidBy" : [ { "Mandar" : 180 } ], "share" : [ { "Aditya" : 60 }, { "Amey" : 60 } ] }
+
+
+Q  - Get Descritpion and Total Amount
+
+>   db.splitwise.mapReduce( 
+        function(){emit(this.description,this.total);}, 
+        function(key,value) { return Array.sum(value) } ,
+        {out : 'descriptionTotal'} 
+    )
+
+{
+        "result" : "descriptionTotal",
+        "timeMillis" : 65,
+        "counts" : {
+                "input" : 10,
+                "emit" : 10,
+                "reduce" : 2,
+                "output" : 5
+        },
+        "ok" : 1
+}
+> db.descriptionTotal.find()
+{ "_id" : "Creamy Nuts", "value" : 300 }
+{ "_id" : "Ice N Spice", "value" : 600 }
+{ "_id" : "McD", "value" : 1280 }
+{ "_id" : "Rolls Delight", "value" : 1170 }
+{ "_id" : "sk`s", "value" : 450 }
+
