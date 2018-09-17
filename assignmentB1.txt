@@ -1,0 +1,154 @@
+-----------------------------------------------------Create Collection------------------------------------------------------------------------
+
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Goa','name':'xyz',info:{'nameOfCrew': [ {fName:'Aditya' , lName : 'Mahaddalkar'} ], losses : 40000} } )
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Kochi','name':'pqr',info:{'nameOfCrew': [ {fName:'Mandar' , lName : 'Pande'} ], losses : 60000  , civilians : 100} } )
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'def',info:{'nameOfCrew': [ {fName:'Anmol' , lName : 'Khanapure'} , {fName : 'Naren' , lName : 'khake'}], losses : 4000  , civilians : 20} } )
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'abc',info:{'nameOfCrew': [ {fName:'Amey' , lName : 'Kolhe'} , {fName : 'Aniket' , lName : 'Kotalwar'} ], losses : 20000} } )
+
+
+------------------------------------------------------Read From Collection--------------------------------------------------------------------
+
+> db.shipWrecks.find()
+{ "_id" : ObjectId("5b9ff382b8a9f0ffea71f32a"), "loc" : "Goa", "name" : "xyz", "info" : { "nameOfCrew" : [ { "fName" : "Aditya", "lName" : "Mahaddalkar" } ], "losses" : 40000 } }
+{ "_id" : ObjectId("5b9ff38db8a9f0ffea71f32b"), "loc" : "Kochi", "name" : "pqr", "info" : { "nameOfCrew" : [ { "fName" : "Mandar", "lName" : "Pande" } ], "losses" : 60000, "civilians" : 100 } }
+{ "_id" : ObjectId("5b9ff39fb8a9f0ffea71f32c"), "loc" : "Mumbai", "name" : "def", "info" : { "nameOfCrew" : [ { "fName" : "Anmol", "lName" : "Khanapure" }, { "fName" : "Naren", "lName" : "khake" } ], "losses" : 4000, "civilians" : 20 } }
+{ "_id" : ObjectId("5b9ff3acb8a9f0ffea71f32d"), "loc" : "Mumbai", "name" : "abc", "info" : { "nameOfCrew" : [ { "fName" : "Amey", "lName" : "Kolhe" }, { "fName" : "Aniket", "lName" : "Kotalwar" } ], "losses" : 20000 } }
+
+
+
+> db.shipWrecks.find().pretty()
+{
+	"_id" : ObjectId("5b87a92a5d67e7ecdbee1e31"),
+	"loc" : "Goa",
+	"name" : "xyz",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Aditya",
+				"lName" : "Mahaddalkar"
+			}
+		],
+		"losses" : 40000
+	}
+}
+{
+	"_id" : ObjectId("5b87a9ba5d67e7ecdbee1e32"),
+	"loc" : "Kochi",
+	"name" : "pqr",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Mandar",
+				"lName" : "Pande"
+			}
+		],
+		"losses" : 60000,
+		"civilians" : 100
+	}
+}
+{
+	"_id" : ObjectId("5b87ab695d67e7ecdbee1e33"),
+	"loc" : "Mumbai",
+	"name" : "def",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Anmol",
+				"lName" : "Khanapure"
+			},
+			{
+				"fName" : "Naren",
+				"lName" : "khake"
+			}
+		],
+		"losses" : 4000,
+		"civilians" : 20
+	}
+}
+{
+	"_id" : ObjectId("5b87ab865d67e7ecdbee1e34"),
+	"loc" : "Mumbai",
+	"name" : "abc",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Amey",
+				"lName" : "Kolhe"
+			},
+			{
+				"fName" : "Aniket",
+				"lName" : "Kotalwar"
+			}
+		],
+		"losses" : 20000
+	}
+}
+{
+	"_id" : ObjectId("5b87b045de311337f5449487"),
+	"loc" : "Goa",
+	"name" : "fgh",
+	"info" : {
+		"nameOfCrew" : [
+			{
+				"fName" : "Daksh",
+				"lName" : "Pokar"
+			},
+			{
+				"fName" : "Apoorva",
+				"lName" : "Khuspe"
+			},
+			{
+				"fName" : "Akash",
+				"lName" : "Patil"
+			}
+		],
+		"losses" : 10000
+	}
+}
+
+
+-----------------------------------------------------------Update------------------------------------------------------------------------
+
+Q - Set Location to Chennai where Name = pqr
+
+> db.shipWrecks.update({name : 'pqr'} , {$set : {'loc' : 'Chennai' } })
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.shipWrecks.find()
+{ "_id" : ObjectId("5b9ff382b8a9f0ffea71f32a"), "loc" : "Goa", "name" : "xyz", "info" : { "nameOfCrew" : [ { "fName" : "Aditya", "lName" : "Mahaddalkar" } ], "losses" : 40000 } }
+{ "_id" : ObjectId("5b9ff39fb8a9f0ffea71f32c"), "loc" : "Mumbai", "name" : "def", "info" : { "nameOfCrew" : [ { "fName" : "Anmol", "lName" : "Khanapure" }, { "fName" : "Naren", "lName" : "khake" } ], "losses" : 4000, "civilians" : 20 } }
+{ "_id" : ObjectId("5b9ff3acb8a9f0ffea71f32d"), "loc" : "Mumbai", "name" : "abc", "info" : { "nameOfCrew" : [ { "fName" : "Amey", "lName" : "Kolhe" }, { "fName" : "Aniket", "lName" : "Kotalwar" } ], "losses" : 20000 } }
+{ "_id" : ObjectId("5b9ff53db8a9f0ffea71f32e"), "loc" : "Chennai", "name" : "pqr", "info" : { "nameOfCrew" : [ { "fName" : "Mandar", "lName" : "Pande" } ], "losses" : 60000, "civilians" : 100 } }
+
+Q - Set Location to Kolkata where location = Mumbai
+
+> db.shipWrecks.update({loc : 'Mumbai'} , {$set : {'loc' : 'Kolkata' } } , {multi : true})
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+> db.shipWrecks.find()
+{ "_id" : ObjectId("5b9ff382b8a9f0ffea71f32a"), "loc" : "Goa", "name" : "xyz", "info" : { "nameOfCrew" : [ { "fName" : "Aditya", "lName" : "Mahaddalkar" } ], "losses" : 40000 } }
+{ "_id" : ObjectId("5b9ff39fb8a9f0ffea71f32c"), "loc" : "Kolkata", "name" : "def", "info" : { "nameOfCrew" : [ { "fName" : "Anmol", "lName" : "Khanapure" }, { "fName" : "Naren", "lName" : "khake" } ], "losses" : 4000, "civilians" : 20 } }
+{ "_id" : ObjectId("5b9ff3acb8a9f0ffea71f32d"), "loc" : "Kolkata", "name" : "abc", "info" : { "nameOfCrew" : [ { "fName" : "Amey", "lName" : "Kolhe" }, { "fName" : "Aniket", "lName" : "Kotalwar" } ], "losses" : 20000 } }
+{ "_id" : ObjectId("5b9ff53db8a9f0ffea71f32e"), "loc" : "Chennai", "name" : "pqr", "info" : { "nameOfCrew" : [ { "fName" : "Mandar", "lName" : "Pande" } ], "losses" : 60000, "civilians" : 100 } }
+
+
+
+-------------------------------------------------------Remove-----------------------------------------------------------------------------
+
+Q -  Remove Entry where Name = pqr
+
+> db.shipWrecks.remove({name : 'pqr'})
+WriteResult({ "nRemoved" : 1 })
+
+> db.shipWrecks.find()
+{ "_id" : ObjectId("5b9ff382b8a9f0ffea71f32a"), "loc" : "Goa", "name" : "xyz", "info" : { "nameOfCrew" : [ { "fName" : "Aditya", "lName" : "Mahaddalkar" } ], "losses" : 40000 } }
+{ "_id" : ObjectId("5b9ff39fb8a9f0ffea71f32c"), "loc" : "Kolkata", "name" : "def", "info" : { "nameOfCrew" : [ { "fName" : "Anmol", "lName" : "Khanapure" }, { "fName" : "Naren", "lName" : "khake" } ], "losses" : 4000, "civilians" : 20 } }
+{ "_id" : ObjectId("5b9ff3acb8a9f0ffea71f32d"), "loc" : "Kolkata", "name" : "abc", "info" : { "nameOfCrew" : [ { "fName" : "Amey", "lName" : "Kolhe" }, { "fName" : "Aniket", "lName" : "Kotalwar" } ], "losses" : 20000 } }
+
+
+Q - Remove Entries where Location = Kolkata
+
+> db.shipWrecks.remove({loc : 'Kolkata'})
+WriteResult({ "nRemoved" : 2 })
+
+> db.shipWrecks.find()
+{ "_id" : ObjectId("5b9ff382b8a9f0ffea71f32a"), "loc" : "Goa", "name" : "xyz", "info" : { "nameOfCrew" : [ { "fName" : "Aditya", "lName" : "Mahaddalkar" } ], "losses" : 40000 } }

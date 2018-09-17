@@ -1,98 +1,382 @@
-
-> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Goa','name':'xyz',info:{'nameOfCrew': [ {fName:'Aditya' , lName : 'Mahaddalkar'} ], losses : 40000} } )
-> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Kochi','name':'pqr',info:{'nameOfCrew': [ {fName:'Mandar' , lName : 'Pande'} ], losses : 60000  , civilians : 100} } )
-> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'def',info:{'nameOfCrew': [ {fName:'Anmol' , lName : 'Khanapure'} , {fName : 'Naren' , lName : 'khake'}], losses : 4000  , civilians : 20} } )
-> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'abc',info:{'nameOfCrew': [ {fName:'Amey' , lName : 'Kolhe'} , {fName : 'Aniket' , lName : 'Kotalwar'} ], losses : 20000} } )
-
-> db.shipWrecks.find().pretty()
-{
-	"_id" : ObjectId("5b87a92a5d67e7ecdbee1e31"),
-	"loc" : "Goa",
-	"name" : "xyz",
-	"info" : {
-		"nameOfCrew" : [
-			{
-				"fName" : "Aditya",
-				"lName" : "Mahaddalkar"
-			}
-		],
-		"losses" : 40000
-	}
-}
-{
-	"_id" : ObjectId("5b87a9ba5d67e7ecdbee1e32"),
-	"loc" : "Kochi",
-	"name" : "pqr",
-	"info" : {
-		"nameOfCrew" : [
-			{
-				"fName" : "Mandar",
-				"lName" : "Pande"
-			}
-		],
-		"losses" : 60000,
-		"civilians" : 100
-	}
-}
-{
-	"_id" : ObjectId("5b87ab695d67e7ecdbee1e33"),
-	"loc" : "Mumbai",
-	"name" : "def",
-	"info" : {
-		"nameOfCrew" : [
-			{
-				"fName" : "Anmol",
-				"lName" : "Khanapure"
-			},
-			{
-				"fName" : "Naren",
-				"lName" : "khake"
-			}
-		],
-		"losses" : 4000,
-		"civilians" : 20
-	}
-}
-{
-	"_id" : ObjectId("5b87ab865d67e7ecdbee1e34"),
-	"loc" : "Mumbai",
-	"name" : "abc",
-	"info" : {
-		"nameOfCrew" : [
-			{
-				"fName" : "Amey",
-				"lName" : "Kolhe"
-			},
-			{
-				"fName" : "Aniket",
-				"lName" : "Kotalwar"
-			}
-		],
-		"losses" : 20000
-	}
-}
-{
-	"_id" : ObjectId("5b87b045de311337f5449487"),
-	"loc" : "Goa",
-	"name" : "fgh",
-	"info" : {
-		"nameOfCrew" : [
-			{
-				"fName" : "Daksh",
-				"lName" : "Pokar"
-			},
-			{
-				"fName" : "Apoorva",
-				"lName" : "Khuspe"
-			},
-			{
-				"fName" : "Akash",
-				"lName" : "Patil"
-			}
-		],
-		"losses" : 10000
-	}
-}
+Query 1 :---------------------------Create Collection---------------------------------
 
 
-1. 
+> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 230 ,  'paidBy' : [ {'Amey' : 230 }] , 'share' : [{'Aditya' : 115 } , {'Amey' : 115}] })
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'sk`s' , 'total' : 450 ,  'paidBy' : [ {'Amey' : 300 } , {'Himanshu' : 150}] , 'share' : [{'Amey' : 90 } , {'Himanshu' : 90} , {'Shriniwas' : 90} ,{'Hrushabh' : 90} , {'Anuj': 90}] })
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Ice N Spice' , 'total' : 600 ,  'paidBy' : [ {'Shriniwas' : 600 } ] , 'share' : [{'Amey' : 200 } , {'Himanshu' : 100} , {'Shriniwas' : 200} ,{'Hrushabh' : 100} ] })
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Master EGG' , 'total' : 340 ,  'paidBy' : [ {'Amey' : 200 } ,{'Jay' : 140} ] , 'share' : [{'Amey' : 170 } , {'Jay' :  170} ] })
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Creamy Nuts' , 'total' : 300 ,  'paidBy' : [ {'Anuj' :  300} ] , 'share' : [{'Amey' : 75 } , {'Himanshu' : 75} , {'Shriniwas' : 75} ,{'Anuj' : 75} ] })
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 460 ,  'paidBy' : [ {'Shriniwas' : 460 } ] , 'share' : [{'Amey' : 120 } , {'Himanshu' : 80} , {'Shriniwas' : 120} ,{'Hrushabh' : 70} , {'Anuj': 70} ] })
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Master EGG' , 'total' : 520 ,  'paidBy' : [ {'Hrushabh' : 520 } ] , 'share' : [{'Amey' : 170 } , {'Himanshu' : 90} , {'Shriniwas' : 170} ,{'Hrushabh' : 90} ] })
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 300 ,  'paidBy' : [ {'Amey' : 300 }] , 'share' : [{'Aditya' : 115 } , {'Amey' : 115}] } , {'Mandar' : 70})
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Master EGG' , 'total' : 420 ,  'paidBy' : [ {'Amey' : 400 }] , 'share' : [{'Aditya' : 140 } , {'Amey' : 140}] } , {'Mandar' : 140})
+WriteResult({ "nInserted" : 1 })
+> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 180 ,  'paidBy' : [ {'Mandar' : 180 }] , 'share' : [{'Aditya' : 60 } , {'Amey' : 60}] } , {'Mandar' : 60})
+WriteResult({ "nInserted" : 1 })
+
+
+Query 2 :----------------------------Select All Entries---------------------------------
+
+
+> db.splitwise.find()
+{ "_id" : ObjectId("5b9fd9acdde36a3d1cd8e2d1"), "description" : "Rolls Delight", "total" : 230, "paidBy" : [ { "Amey" : 230 } ], "share" : [ { "Aditya" : 115 }, { "Amey" : 115 } ] }
+{ "_id" : ObjectId("5b9fda2ddde36a3d1cd8e2d2"), "description" : "sk`s", "total" : 450, "paidBy" : [ { "Amey" : 300 }, { "Himanshu" : 150 } ], "share" : [ { "Amey" : 90 }, { "Himanshu" : 90 }, { "Shriniwas" : 90 }, { "Hrushabh" : 90 }, { "Anuj" : 90 } ] }
+{ "_id" : ObjectId("5b9fda93dde36a3d1cd8e2d3"), "description" : "Ice N Spice", "total" : 600, "paidBy" : [ { "Shriniwas" : 600 } ], "share" : [ { "Amey" : 200 }, { "Himanshu" : 100 }, { "Shriniwas" : 200 }, { "Hrushabh" : 100 } ] }
+{ "_id" : ObjectId("5b9fdde4dde36a3d1cd8e2d4"), "description" : "Master EGG", "total" : 340, "paidBy" : [ { "Amey" : 200 }, { "Jay" : 140 } ], "share" : [ { "Amey" : 170 }, { "Jay" : 170 } ] }
+{ "_id" : ObjectId("5b9fde7ddde36a3d1cd8e2d5"), "description" : "Creamy Nuts", "total" : 300, "paidBy" : [ { "Anuj" : 300 } ], "share" : [ { "Amey" : 75 }, { "Himanshu" : 75 }, { "Shriniwas" : 75 }, { "Anuj" : 75 } ] }
+{ "_id" : ObjectId("5b9fdf41dde36a3d1cd8e2d6"), "description" : "Rolls Delight", "total" : 460, "paidBy" : [ { "Shriniwas" : 460 } ], "share" : [ { "Amey" : 120 }, { "Himanshu" : 80 }, { "Shriniwas" : 120 }, { "Hrushabh" : 70 }, { "Anuj" : 70 } ] }
+{ "_id" : ObjectId("5b9fdf8fdde36a3d1cd8e2d7"), "description" : "Master EGG", "total" : 520, "paidBy" : [ { "Hrushabh" : 520 } ], "share" : [ { "Amey" : 170 }, { "Himanshu" : 90 }, { "Shriniwas" : 170 }, { "Hrushabh" : 90 } ] }
+{ "_id" : ObjectId("5b9fe0dadde36a3d1cd8e2d8"), "description" : "Rolls Delight", "total" : 300, "paidBy" : [ { "Amey" : 300 } ], "share" : [ { "Aditya" : 115 }, { "Amey" : 115 } ] }
+{ "_id" : ObjectId("5b9fe1d9dde36a3d1cd8e2d9"), "description" : "Master EGG", "total" : 420, "paidBy" : [ { "Amey" : 400 } ], "share" : [ { "Aditya" : 140 }, { "Amey" : 140 } ] }
+{ "_id" : ObjectId("5b9fe24fdde36a3d1cd8e2da"), "description" : "Rolls Delight", "total" : 180, "paidBy" : [ { "Mandar" : 180 } ], "share" : [ { "Aditya" : 60 }, { "Amey" : 60 } ] }
+> db.splitwise.find().pretty()
+{
+        "_id" : ObjectId("5b9fd9acdde36a3d1cd8e2d1"),
+        "description" : "Rolls Delight",
+        "total" : 230,
+        "paidBy" : [
+                {
+                        "Amey" : 230
+                }
+        ],
+        "share" : [
+                {
+                        "Aditya" : 115
+                },
+                {
+                        "Amey" : 115
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fda2ddde36a3d1cd8e2d2"),
+        "description" : "sk`s",
+        "total" : 450,
+        "paidBy" : [
+                {
+                        "Amey" : 300
+                },
+                {
+                        "Himanshu" : 150
+                }
+        ],
+        "share" : [
+                {
+                        "Amey" : 90
+                },
+                {
+                        "Himanshu" : 90
+                },
+                {
+                        "Shriniwas" : 90
+                },
+                {
+                        "Hrushabh" : 90
+                },
+                {
+                        "Anuj" : 90
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fda93dde36a3d1cd8e2d3"),
+        "description" : "Ice N Spice",
+        "total" : 600,
+        "paidBy" : [
+                {
+                        "Shriniwas" : 600
+                }
+        ],
+        "share" : [
+                {
+                        "Amey" : 200
+                },
+                {
+                        "Himanshu" : 100
+                },
+                {
+                        "Shriniwas" : 200
+                },
+                {
+                        "Hrushabh" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fdde4dde36a3d1cd8e2d4"),
+        "description" : "Master EGG",
+        "total" : 340,
+        "paidBy" : [
+                {
+                        "Amey" : 200
+                },
+                {
+                        "Jay" : 140
+                }
+        ],
+        "share" : [
+                {
+                        "Amey" : 170
+                },
+                {
+                        "Jay" : 170
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fde7ddde36a3d1cd8e2d5"),
+        "description" : "Creamy Nuts",
+        "total" : 300,
+        "paidBy" : [
+                {
+                        "Anuj" : 300
+                }
+        ],
+        "share" : [
+                {
+                        "Amey" : 75
+                },
+                {
+                        "Himanshu" : 75
+                },
+                {
+                        "Shriniwas" : 75
+                },
+                {
+                        "Anuj" : 75
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fdf41dde36a3d1cd8e2d6"),
+        "description" : "Rolls Delight",
+        "total" : 460,
+        "paidBy" : [
+                {
+                        "Shriniwas" : 460
+                }
+        ],
+        "share" : [
+                {
+                        "Amey" : 120
+                },
+                {
+                        "Himanshu" : 80
+                },
+                {
+                        "Shriniwas" : 120
+                },
+                {
+                        "Hrushabh" : 70
+                },
+                {
+                        "Anuj" : 70
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fdf8fdde36a3d1cd8e2d7"),
+        "description" : "Master EGG",
+        "total" : 520,
+        "paidBy" : [
+                {
+                        "Hrushabh" : 520
+                }
+        ],
+        "share" : [
+                {
+                        "Amey" : 170
+                },
+                {
+                        "Himanshu" : 90
+                },
+                {
+                        "Shriniwas" : 170
+                },
+                {
+                        "Hrushabh" : 90
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fe0dadde36a3d1cd8e2d8"),
+        "description" : "Rolls Delight",
+        "total" : 300,
+        "paidBy" : [
+                {
+                        "Amey" : 300
+                }
+        ],
+        "share" : [
+                {
+                        "Aditya" : 115
+                },
+                {
+                        "Amey" : 115
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fe1d9dde36a3d1cd8e2d9"),
+        "description" : "Master EGG",
+        "total" : 420,
+        "paidBy" : [
+                {
+                        "Amey" : 400
+                }
+        ],
+        "share" : [
+                {
+                        "Aditya" : 140
+                },
+                {
+                        "Amey" : 140
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5b9fe24fdde36a3d1cd8e2da"),
+        "description" : "Rolls Delight",
+        "total" : 180,
+        "paidBy" : [
+                {
+                        "Mandar" : 180
+                }
+        ],
+        "share" : [
+                {
+                        "Aditya" : 60
+                },
+                {
+                        "Amey" : 60
+                }
+        ]
+}
+
+
+
+
+Query 3 :---------------------------------Find Specific Documnet------------------------------------
+
+Q - Select entry where description is 'Creamy Nuts'
+
+> db.splitwise.find({description : 'Creamy Nuts'})
+
+{ "_id" : ObjectId("5b9fde7ddde36a3d1cd8e2d5"), "description" : "Creamy Nuts", "total" : 300, "paidBy" : [ { "Anuj" : 300 } ], "share" : [ { "Amey" : 75 }, { "Himanshu" : 75 }, { "Shriniwas" : 75 }, { "Anuj" : 75 } ] }
+
+
+
+
+Query 4 :----------------------------------Find Using IN--------------------------------------------
+
+Q - Select Entries where description in ['Rolls Delight' , 'Ice N Spice']
+
+db.splitwise.find({description : {$in : ['Rolls Delight' , 'Ice N Spice']}})
+
+{ "_id" : ObjectId("5b9fd9acdde36a3d1cd8e2d1"), "description" : "Rolls Delight", "total" : 230, "paidBy" : [ { "Amey" : 230 } ], "share" : [ { "Aditya" : 115 }, { "Amey" : 115 } ] }
+{ "_id" : ObjectId("5b9fda93dde36a3d1cd8e2d3"), "description" : "Ice N Spice", "total" : 600, "paidBy" : [ { "Shriniwas" : 600 } ], "share" : [ { "Amey" : 200 }, { "Himanshu" : 100 }, { "Shriniwas" : 200 }, { "Hrushabh" : 100 } ] }
+{ "_id" : ObjectId("5b9fdf41dde36a3d1cd8e2d6"), "description" : "Rolls Delight", "total" : 460, "paidBy" : [ { "Shriniwas" : 460 } ], "share" : [ { "Amey" : 120 }, { "Himanshu" : 80 }, { "Shriniwas" : 120 }, { "Hrushabh" : 70 }, { "Anuj" : 70 } ] }
+{ "_id" : ObjectId("5b9fe0dadde36a3d1cd8e2d8"), "description" : "Rolls Delight", "total" : 300, "paidBy" : [ { "Amey" : 300 } ], "share" : [ { "Aditya" : 115 }, { "Amey" : 115 } ] }
+{ "_id" : ObjectId("5b9fe24fdde36a3d1cd8e2da"), "description" : "Rolls Delight", "total" : 180, "paidBy" : [ { "Mandar" : 180 } ], "share" : [ { "Aditya" : 60 }, { "Amey" : 60 } ] }
+
+
+
+
+Query 5 :--------------------------------Find using gte----------------------------------------------
+
+Q - Select Entries where Total is greater than 500
+
+> db.splitwise.find({ total : {$gte : 500} })
+
+{ "_id" : ObjectId("5b9fda93dde36a3d1cd8e2d3"), "description" : "Ice N Spice", "total" : 600, "paidBy" : [ { "Shriniwas" : 600 } ], "share" : [ { "Amey" : 200 }, { "Himanshu" : 100 }, { "Shriniwas" : 200 }, { "Hrushabh" : 100 } ] }
+{ "_id" : ObjectId("5b9fdf8fdde36a3d1cd8e2d7"), "description" : "Master EGG", "total" : 520, "paidBy" : [ { "Hrushabh" : 520 } ], "share" : [ { "Amey" : 170 }, { "Himanshu" : 90 }, { "Shriniwas" : 170 }, { "Hrushabh" : 90 } ] }
+
+
+
+
+Query 6 :---------------------------------Find using lte---------------------------------------------
+
+Q - Select All entries where Total is less than 300
+
+> db.splitwise.find({ total : {$lte : 300} })
+
+{ "_id" : ObjectId("5b9fd9acdde36a3d1cd8e2d1"), "description" : "Rolls Delight", "total" : 230, "paidBy" : [ { "Amey" : 230 } ], "share" : [ { "Aditya" : 115 }, { "Amey" : 115 } ] }
+{ "_id" : ObjectId("5b9fde7ddde36a3d1cd8e2d5"), "description" : "Creamy Nuts", "total" : 300, "paidBy" : [ { "Anuj" : 300 } ], "share" : [ { "Amey" : 75 }, { "Himanshu" : 75 }, { "Shriniwas" : 75 }, { "Anuj" : 75 } ] }
+{ "_id" : ObjectId("5b9fe0dadde36a3d1cd8e2d8"), "description" : "Rolls Delight", "total" : 300, "paidBy" : [ { "Amey" : 300 } ], "share" : [ { "Aditya" : 150 }, { "Amey" : 150 } ] }
+{ "_id" : ObjectId("5b9fe24fdde36a3d1cd8e2da"), "description" : "Rolls Delight", "total" : 180, "paidBy" : [ { "Mandar" : 180 } ], "share" : [ { "Aditya" : 60 }, { "Amey" : 60 } ] }
+
+
+
+
+Query 7 :----------------------------Find using AND & OR----------------------------------------------
+
+Q - Select Entries where description is 'Rolls Delight' or 'Master EGG' and Total Between 250 - 500
+
+> db.splitwise.find({ $and : [ {$or : [{description : "Rolls Delight"} , {description : 'Master EGG'}]} , {total : {$gte : 250 } }, { total : { $lte : 400 } }  ] })
+
+{ "_id" : ObjectId("5b9fdde4dde36a3d1cd8e2d4"), "description" : "Master EGG", "total" : 340, "paidBy" : [ { "Amey" : 200 }, { "Jay" : 140 } ], "share" : [ { "Amey" : 170 }, { "Jay" : 170 } ] }
+{ "_id" : ObjectId("5b9fe0dadde36a3d1cd8e2d8"), "description" : "Rolls Delight", "total" : 300, "paidBy" : [ { "Amey" : 300 } ], "share" : [ { "Aditya" : 150 }, { "Amey" : 150 } ] }
+
+
+
+
+Query 8 :-----------------------------Update Multi----------------------------------------------------
+
+Q - set description to 'McD' where description = 'Master EGG'
+
+> db.splitwise.update({description : 'Rolls Mania'} , {$set : {'description' : 'McD'}} , {multi : true} )
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 3 })
+
+> db.splitwise.find()
+
+{ "_id" : ObjectId("5b9fd9acdde36a3d1cd8e2d1"), "description" : "Rolls Delight", "total" : 230, "paidBy" : [ { "Amey" : 230 } ], "share" : [ { "Aditya" : 115 }, { "Amey" : 115 } ] }
+{ "_id" : ObjectId("5b9fda2ddde36a3d1cd8e2d2"), "description" : "sk`s", "total" : 450, "paidBy" : [ { "Amey" : 300 }, { "Himanshu" : 150 } ], "share" : [ { "Amey" : 90 }, { "Himanshu" : 90 }, { "Shriniwas" : 90 }, { "Hrushabh" : 90 }, { "Anuj" : 90 } ] }
+{ "_id" : ObjectId("5b9fda93dde36a3d1cd8e2d3"), "description" : "Ice N Spice", "total" : 600, "paidBy" : [ { "Shriniwas" : 600 } ], "share" : [ { "Amey" : 200 }, { "Himanshu" : 100 }, { "Shriniwas" : 200 }, { "Hrushabh" : 100 } ] }
+{ "_id" : ObjectId("5b9fdde4dde36a3d1cd8e2d4"), "description" : "McD", "total" : 340, "paidBy" : [ { "Amey" : 200 }, { "Jay" : 140 } ], "share" : [ { "Amey" : 170 }, { "Jay" : 170 } ] }
+{ "_id" : ObjectId("5b9fde7ddde36a3d1cd8e2d5"), "description" : "Creamy Nuts", "total" : 300, "paidBy" : [ { "Anuj" : 300 } ], "share" : [ { "Amey" : 75 }, { "Himanshu" : 75 }, { "Shriniwas" : 75 }, { "Anuj" : 75 } ] }
+{ "_id" : ObjectId("5b9fdf41dde36a3d1cd8e2d6"), "description" : "Rolls Delight", "total" : 460, "paidBy" : [ { "Shriniwas" : 460 } ], "share" : [ { "Amey" : 120 }, { "Himanshu" : 80 }, { "Shriniwas" : 120 }, { "Hrushabh" : 70 }, { "Anuj" : 70 } ] }
+{ "_id" : ObjectId("5b9fdf8fdde36a3d1cd8e2d7"), "description" : "McD", "total" : 520, "paidBy" : [ { "Hrushabh" : 520 } ], "share" : [ { "Amey" : 170 }, { "Himanshu" : 90 }, { "Shriniwas" : 170 }, { "Hrushabh" : 90 } ] }
+{ "_id" : ObjectId("5b9fe0dadde36a3d1cd8e2d8"), "description" : "Rolls Delight", "total" : 300, "paidBy" : [ { "Amey" : 300 } ], "share" : [ { "Aditya" : 150 }, { "Amey" : 150 } ] }
+{ "_id" : ObjectId("5b9fe1d9dde36a3d1cd8e2d9"), "description" : "McD", "total" : 420, "paidBy" : [ { "Amey" : 400 } ], "share" : [ { "Aditya" : 140 }, { "Amey" : 140 } ] }
+{ "_id" : ObjectId("5b9fe24fdde36a3d1cd8e2da"), "description" : "Rolls Delight", "total" : 180, "paidBy" : [ { "Mandar" : 180 } ], "share" : [ { "Aditya" : 60 }, { "Amey" : 60 } ] }
+
+
+
+
+Query 9 :---------------------------------Update Upsert----------------------------------------------
+
+Q - check if WIFI entry is present if not insert
+
+> db.splitwise.update( {description : 'WIFI'} , { 'description' : 'WIFI' , 'total' : 900  , paidBy : [{'Anuj':900}] , 'share' : [ {'Anuj':300} , {'Shriniwas' : 300} , {'Amey' : 300}  ] } , {upsert : true} )
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 1,
+        "nModified" : 0,
+        "_id" : ObjectId("5b9ff072c2da4df48ac73f17")
+})
+
+> db.splitwise.find({description : 'WIFI'})
+
+{ "_id" : ObjectId("5b9ff072c2da4df48ac73f17"), "description" : "WIFI", "total" : 900, "paidBy" : [ { "Anuj" : 900 } ], "share" : [ { "Anuj" : 300 }, { "Shriniwas" : 300 }, { "Amey" : 300 } ] }
+
+
+
+
+Query 10 :----------------------------------SAVE Documnet--------------------------------------------
+
+Q - Save Document WIFI
+
+> db.splitwise.save( { 'description' : 'WIFI' , 'total' : 900  , paidBy : [{'Anuj':900}] , 'share' : [ {'Anuj':300} , {'Shriniwas' : 300} , {'Amey' : 300}  ] } )
+WriteResult({ "nInserted" : 1 })
+
+> db.splitwise.find({description : 'WIFI'})
+
+{ "_id" : ObjectId("5b9ff215dde36a3d1cd8e2db"), "description" : "WIFI", "total" : 900, "paidBy" : [ { "Anuj" : 900 } ], "share" : [ { "Anuj" : 300 }, { "Shriniwas" : 300 }, { "Amey" : 300 } ] }
