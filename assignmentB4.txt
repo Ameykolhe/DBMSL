@@ -14,11 +14,11 @@ WriteResult({ "nInserted" : 1 })
 WriteResult({ "nInserted" : 1 })
 > db.splitwise.insert({'description' : 'Master EGG' , 'total' : 520 ,  'paidBy' : [ {'name' : 'Hrushabh','amount' : 520 } ] , 'share' : [{'name' : 'Amey','amount' : 170 } , {'name' : 'Himanshu','amount' : 90} , {'name' : 'Shriniwas','amount' : 170} ,{'name' : 'Hrushabh','amount' : 90} ] })
 WriteResult({ "nInserted" : 1 })
-> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 300 ,  'paidBy' : [ {'name' : 'Amey','amount' : 300 }] , 'share' : [{'name' : 'Aditya','amount' : 115 } , {'name' : 'Amey','amount' : 115}] } , {'name' : 'Mandar','amount' : 70})
+> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 300 ,  'paidBy' : [ {'name' : 'Amey','amount' : 300 }] , 'share' : [{'name' : 'Aditya','amount' : 115 } , {'name' : 'Amey','amount' : 115} , {'name' : 'Mandar','amount' : 70 } ] })
 WriteResult({ "nInserted" : 1 })
-> db.splitwise.insert({'description' : 'Master EGG' , 'total' : 420 ,  'paidBy' : [ {'name' : 'Amey','amount' : 400 }] , 'share' : [{'name' : 'Aditya','amount' : 140 } , {'name' : 'Amey','amount' : 140}] } , {'name' : 'Mandar','amount' : 140})
+> db.splitwise.insert({'description' : 'Master EGG' , 'total' : 420 ,  'paidBy' : [ {'name' : 'Amey','amount' : 400 }] , 'share' : [{'name' : 'Aditya','amount' : 140 } , {'name' : 'Amey','amount' : 140} , {'name' : 'Mandar','amount' : 140} ] })
 WriteResult({ "nInserted" : 1 })
-> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 180 ,  'paidBy' : [ {'name' : 'Mandar','amount' : 180 }] , 'share' : [{'name' : 'Aditya','amount' : 60 } , {'name' : 'Amey','amount' : 60}] } , {'name' : 'Mandar','amount' : 60})
+> db.splitwise.insert({'description' : 'Rolls Delight' , 'total' : 180 ,  'paidBy' : [ {'name' : 'Mandar','amount' : 180 }] , 'share' : [{'name' : 'Aditya','amount' : 60 } , {'name' : 'Amey','amount' : 60} , {'name' : 'Mandar','amount' : 60 } ] } )
 WriteResult({ "nInserted" : 1 })
 
 
@@ -38,7 +38,7 @@ WriteResult({ "nInserted" : 1 })
 
 > db.splitwise.find().pretty()
 {
-        "_id" : ObjectId("5ba005594c33203b8b298d9d"),
+        "_id" : ObjectId("5ba25df68454294cf7bc2403"),
         "description" : "Rolls Delight",
         "total" : 230,
         "paidBy" : [
@@ -59,7 +59,7 @@ WriteResult({ "nInserted" : 1 })
         ]
 }
 {
-        "_id" : ObjectId("5ba0056b4c33203b8b298d9e"),
+        "_id" : ObjectId("5ba25e108454294cf7bc2404"),
         "description" : "sk`s",
         "total" : 450,
         "paidBy" : [
@@ -96,7 +96,7 @@ WriteResult({ "nInserted" : 1 })
         ]
 }
 {
-        "_id" : ObjectId("5ba005794c33203b8b298d9f"),
+        "_id" : ObjectId("5ba25e238454294cf7bc2405"),
         "description" : "Ice N Spice",
         "total" : 600,
         "paidBy" : [
@@ -125,7 +125,7 @@ WriteResult({ "nInserted" : 1 })
         ]
 }
 {
-        "_id" : ObjectId("5ba0058b4c33203b8b298da0"),
+        "_id" : ObjectId("5ba25e2f8454294cf7bc2406"),
         "description" : "Master EGG",
         "total" : 340,
         "paidBy" : [
@@ -150,7 +150,7 @@ WriteResult({ "nInserted" : 1 })
         ]
 }
 {
-        "_id" : ObjectId("5ba005a24c33203b8b298da1"),
+        "_id" : ObjectId("5ba25e3c8454294cf7bc2407"),
         "description" : "Creamy Nuts",
         "total" : 300,
         "paidBy" : [
@@ -179,7 +179,7 @@ WriteResult({ "nInserted" : 1 })
         ]
 }
 {
-        "_id" : ObjectId("5ba005b44c33203b8b298da2"),
+        "_id" : ObjectId("5ba25e4a8454294cf7bc2408"),
         "description" : "Rolls Delight",
         "total" : 460,
         "paidBy" : [
@@ -212,7 +212,7 @@ WriteResult({ "nInserted" : 1 })
         ]
 }
 {
-        "_id" : ObjectId("5ba005c84c33203b8b298da3"),
+        "_id" : ObjectId("5ba25e588454294cf7bc2409"),
         "description" : "Master EGG",
         "total" : 520,
         "paidBy" : [
@@ -241,7 +241,7 @@ WriteResult({ "nInserted" : 1 })
         ]
 }
 {
-        "_id" : ObjectId("5ba005d44c33203b8b298da4"),
+        "_id" : ObjectId("5ba2606e8454294cf7bc240d"),
         "description" : "Rolls Delight",
         "total" : 300,
         "paidBy" : [
@@ -258,32 +258,15 @@ WriteResult({ "nInserted" : 1 })
                 {
                         "name" : "Amey",
                         "amount" : 115
-                }
-        ]
-}
-{
-        "_id" : ObjectId("5ba005e34c33203b8b298da5"),
-        "description" : "Master EGG",
-        "total" : 420,
-        "paidBy" : [
-                {
-                        "name" : "Amey",
-                        "amount" : 400
-                }
-        ],
-        "share" : [
-                {
-                        "name" : "Aditya",
-                        "amount" : 140
                 },
                 {
-                        "name" : "Amey",
-                        "amount" : 140
+                        "name" : "Mandar",
+                        "amount" : 70
                 }
         ]
 }
 {
-        "_id" : ObjectId("5ba005ef4c33203b8b298da6"),
+        "_id" : ObjectId("5ba2609f8454294cf7bc240f"),
         "description" : "Rolls Delight",
         "total" : 180,
         "paidBy" : [
@@ -300,10 +283,38 @@ WriteResult({ "nInserted" : 1 })
                 {
                         "name" : "Amey",
                         "amount" : 60
+                },
+                {
+                        "name" : "Mandar",
+                        "amount" : 60
                 }
         ]
 }
-
+{
+        "_id" : ObjectId("5ba261c08454294cf7bc2410"),
+        "description" : "Master EGG",
+        "total" : 420,
+        "paidBy" : [
+                {
+                        "name" : "Amey",
+                        "amount" : 420
+                }
+        ],
+        "share" : [
+                {
+                        "name" : "Aditya",
+                        "amount" : 140
+                },
+                {
+                        "name" : "Amey",
+                        "amount" : 140
+                },
+                {
+                        "name" : "Mandar",
+                        "amount" : 140
+                }
+        ]
+}
 
 ------------------------------------------------------------------------------------------------------------------------------------
 
@@ -368,3 +379,82 @@ db.splitwise.mapReduce(
 { "_id" : "Jay", "value" : 140 }
 { "_id" : "Mandar", "value" : 180 }
 { "_id" : "Shriniwas", "value" : 1060 }
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Q - Find total Amount paid and totalOwed
+
+
+var mapFunc1 = function(){
+        for(var i = 0 ; i < this.paidBy.length ; i++){
+                value = {
+                        totalPaid : this.paidBy[i].amount , 
+                        totalOwed : 0
+                };
+                emit(this.paidBy[i].name,value);
+        }
+        for(var i = 0 ; i < this.share.length ; i++){
+                value = {
+                        
+                };
+                emit(this.paidBy[i].name,value);
+        }
+};
+
+
+var mapFunc1 = function(){
+        p = this.paidBy;
+        s = this.share;
+
+        for(var i = 0 ; i < p.length ; i++){
+                value = {
+                        totalPaid : p[i].amount , 
+                        totalOwed : 0
+                };
+                emit(p[i].name,value);
+        }
+
+        for(var i = 0 ; i < s.length ; i++){
+                value = {
+                        totalPaid : 0 , 
+                        totalOwed : s[i].amount
+                };
+                emit(s[i].name,value);
+        }
+
+};
+
+
+var reduceFunc1 = function(key , value){
+
+        returnVal = {
+                totalPaid : 0 , 
+                totalOwed : 0
+        };
+        for(var i = 0 ; i < value.length ; i++ ){
+                returnVal.totalPaid += value[i].totalPaid;
+                returnVal.totalOwed += value[i].totalOwed;
+        }
+
+        return returnVal
+};
+
+
+db.splitwise.mapReduce(
+        mapFunc1,
+        reduceFunc1,
+        {out : 'individualDetails'}
+)
+
+
+> db.individualDetails.find()
+{ "_id" : "Aditya", "value" : { "totalPaid" : 0, "totalOwed" : 430 } }
+{ "_id" : "Amey", "value" : { "totalPaid" : 1450, "totalOwed" : 1255 } }
+{ "_id" : "Anuj", "value" : { "totalPaid" : 300, "totalOwed" : 235 } }
+{ "_id" : "Himanshu", "value" : { "totalPaid" : 150, "totalOwed" : 435 } }
+{ "_id" : "Hrushabh", "value" : { "totalPaid" : 520, "totalOwed" : 350 } }
+{ "_id" : "Jay", "value" : { "totalPaid" : 140, "totalOwed" : 170 } }
+{ "_id" : "Mandar", "value" : { "totalPaid" : 180, "totalOwed" : 270 } }
+{ "_id" : "Shriniwas", "value" : { "totalPaid" : 1060, "totalOwed" : 655 } }
