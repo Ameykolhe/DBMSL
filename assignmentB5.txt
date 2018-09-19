@@ -1,0 +1,131 @@
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Goa','name':'xyz',info:{'nameOfCrew': [ {fName:'Aditya' , lName : 'Mahaddalkar'} ], losses : 40000} } )
+WriteResult({ "nInserted" : 1 })
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Kochi','name':'pqr',info:{'nameOfCrew': [ {fName:'Mandar' , lName : 'Pande'} ], losses : 60000  , civilians : 100} } )
+WriteResult({ "nInserted" : 1 })
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'def',info:{'nameOfCrew': [ {fName:'Anmol' , lName : 'Khanapure'} , {fName : 'Naren' , lName : 'khake'}], losses : 4000  , civilians : 20} } )
+WriteResult({ "nInserted" : 1 })
+> db.shipWrecks.insert({'_id':ObjectId() , 'loc':'Mumbai','name':'abc',info:{'nameOfCrew': [ {fName:'Amey' , lName : 'Kolhe'} , {fName : 'Aniket' , lName : 'Kotalwar'} ], losses : 20000} } )
+WriteResult({ "nInserted" : 1 })
+> db.shipWrecks.find().pretty
+function () {
+    this._prettyShell = true;
+    return this;
+}
+> db.shipWrecks.find().pretty()
+{
+        "_id" : ObjectId("5ba279758454294cf7bc2411"),
+        "loc" : "Goa",
+        "name" : "xyz",
+        "info" : {
+                "nameOfCrew" : [
+                        {
+                                "fName" : "Aditya",
+                                "lName" : "Mahaddalkar"
+                        }
+                ],
+                "losses" : 40000
+        }
+}
+{
+        "_id" : ObjectId("5ba2797f8454294cf7bc2412"),
+        "loc" : "Kochi",
+        "name" : "pqr",
+        "info" : {
+                "nameOfCrew" : [
+                        {
+                                "fName" : "Mandar",
+                                "lName" : "Pande"
+                        }
+                ],
+                "losses" : 60000,
+                "civilians" : 100
+        }
+}
+{
+        "_id" : ObjectId("5ba2798b8454294cf7bc2413"),
+        "loc" : "Mumbai",
+        "name" : "def",
+        "info" : {
+                "nameOfCrew" : [
+                        {
+                                "fName" : "Anmol",
+                                "lName" : "Khanapure"
+                        },
+                        {
+                                "fName" : "Naren",
+                                "lName" : "khake"
+                        }
+                ],
+                "losses" : 4000,
+                "civilians" : 20
+        }
+}
+{
+        "_id" : ObjectId("5ba2799c8454294cf7bc2414"),
+        "loc" : "Mumbai",
+        "name" : "abc",
+        "info" : {
+                "nameOfCrew" : [
+                        {
+                                "fName" : "Amey",
+                                "lName" : "Kolhe"
+                        },
+                        {
+                                "fName" : "Aniket",
+                                "lName" : "Kotalwar"
+                        }
+                ],
+                "losses" : 20000
+        }
+}
+
+
+Query 1 :---------------------------------------------------------------------------------------------------------------
+
+Q - find entries where Amey or Aditya are Crew Members                  $or
+
+> db.shipWrecks.find({$or : [{'info.nameOfCrew.fName' : 'Amey'} ,{'info.nameOfCrew.fName' : 'Aditya'}]})
+{ "_id" : ObjectId("5ba279758454294cf7bc2411"), "loc" : "Goa", "name" : "xyz", "info" : { "nameOfCrew" : [ { "fName" : "Aditya", "lName" : "Mahaddalkar" } ], "losses" : 40000 } }
+{ "_id" : ObjectId("5ba2799c8454294cf7bc2414"), "loc" : "Mumbai", "name" : "abc", "info" : { "nameOfCrew" : [ { "fName" : "Amey", "lName" : "Kolhe" }, { "fName" : "Aniket", "lName" : "Kotalwar" } ], "losses" : 40000 } }
+
+
+Query 2 :------------------------------------------------------------------------------------------------------------
+
+Q - get count of ships where losses > 30000                             $count
+
+> db.shipWrecks.find({'info.losses' : {$gte : 30000}})
+{ "_id" : ObjectId("5ba279758454294cf7bc2411"), "loc" : "Goa", "name" : "xyz", "info" : { "nameOfCrew" : [ { "fName" : "Aditya", "lName" : "Mahaddalkar" } ], "losses" : 40000 } }
+{ "_id" : ObjectId("5ba2797f8454294cf7bc2412"), "loc" : "Kochi", "name" : "pqr", "info" : { "nameOfCrew" : [ { "fName" : "Mandar", "lName" : "Pande" } ], "losses" : 60000, "civilians" : 100 } }
+
+> db.shipWrecks.find({'info.losses' : {$gte : 30000}}).count()
+2
+
+Query 3 :-------------------------------------------------------------------------------------------------------------
+
+Q - get total losses in shipWrecks by location and civilian count       $sum
+
+> db.shipWrecks.aggregate([{ $group : { '_id' : '$loc' , 'totalAmount' : {$sum : '$info.losses' } , 'civilianCount' : {$sum : '$info.civilians'} } }])
+{ "_id" : "Kochi", "totalAmount" : 60000, "civilianCount" : 100 }
+{ "_id" : "Mumbai", "totalAmount" : 24000, "civilianCount" : 20 }
+{ "_id" : "Goa", "totalAmount" : 40000, "civilianCount" : 0 }
+
+
+Query 4 :-------------------------------------------------------------------------------------------------------------
+
+Q - Increase Loss by 20000 where ship name = abc                        $inc
+
+> db.shipWrecks.update({name : 'abc'} , {$inc : {'info.losses' : 20000}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.shipWrecks.find({name : 'abc'})
+{ "_id" : ObjectId("5ba2799c8454294cf7bc2414"), "loc" : "Mumbai", "name" : "abc", "info" : { "nameOfCrew" : [ { "fName" : "Amey", "lName" : "Kolhe" }, { "fName" : "Aniket", "lName" : "Kotalwar" } ], "losses" : 40000 } }
+
+
+Query 5 :-------------------------------------------------------------------------------------------------------------
+
+Q - count noOfCrew Members                                              $size
+
+> db.shipWrecks.aggregate([{$project : { _id : 0 , name : 1  , noOfCrew : { $size : '$info.nameOfCrew' } } } ])
+{ "name" : "xyz", "noOfCrew" : 1 }
+{ "name" : "pqr", "noOfCrew" : 1 }
+{ "name" : "def", "noOfCrew" : 2 }
+{ "name" : "abc", "noOfCrew" : 2 }
