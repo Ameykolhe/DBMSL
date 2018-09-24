@@ -1,0 +1,3 @@
+{"RollNO":3144,"Subject":[{"CN":81},{"DBMS":82},{"ISEE":96},{"SEPM":85},{"TOC":76}],"Name":{"LName":"Kolhe","FName":"Amey"}}
+{"RollNO":3144,"Subject":[{"CN":76},{"DBMS":81},{"ISEE":82},{"SEPM":79},{"TOC":88}],"Name":{"LName":"Kolhe","FName":"Amey"}}
+{"RollNO":3144,"Subject":[{"CN":75},{"DBMS":93},{"ISEE":77},{"SEPM":95},{"TOC":87}],"Name":{"LName":"Kolhe","FName":"Amey"}}
