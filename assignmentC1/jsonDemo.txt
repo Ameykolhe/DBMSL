@@ -1,0 +1,6 @@
+{"RollNO":3144,"Subject":[{"CN":83},{"DBMS":100},{"ISEE":100},{"SEPM":81},{"TOC":91}],"Name":{"LName":"Kolhe","FName":"Amey"}}
+{"RollNO":3242,"Subject":[{"CN":80},{"DBMS":87},{"ISEE":96},{"SEPM":93},{"TOC":78}],"Name":{"LName":"Kanetkar","FName":"Anuj"}}
+{"RollNO":3144,"Subject":[{"CN":75},{"DBMS":89},{"ISEE":97},{"SEPM":97},{"TOC":89}],"Name":{"LName":"Kolhe","FName":"Amey"}}
+{"RollNO":3242,"Subject":[{"CN":88},{"DBMS":86},{"ISEE":81},{"SEPM":81},{"TOC":88}],"Name":{"LName":"Kanetkar","FName":"Anuj"}}
+{"RollNO":3256,"Subject":[{"CN":80},{"DBMS":94},{"ISEE":81},{"SEPM":82},{"TOC":87}],"Name":{"LName":"Nayak","FName":"Shriniwas"}}
+{"RollNO":3155,"Subject":[{"CN":87},{"DBMS":98},{"ISEE":78},{"SEPM":91},{"TOC":84}],"Name":{"LName":"Pande","FName":"Mandar"}}
